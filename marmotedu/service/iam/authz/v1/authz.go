@@ -39,15 +39,14 @@ func newAuthz(c *AuthzV1Client) *authz {
 }
 
 // Get takes name of the secret, and returns the corresponding secret object, and an error if there is any.
-func (c *authz) Authorize(ctx context.Context, request *ladon.Request,
-	opts metav1.AuthorizeOptions) (result *authzv1.Response, err error) {
+func (c *authz) Authorize(ctx context.Context, request *ladon.Request, opts metav1.AuthorizeOptions) (result *authzv1.Response, err error) {
 	result = &authzv1.Response{}
-	err = c.client.Post().
-		Resource("authz").
-		VersionedParams(opts).
-		Body(request).
-		Do(ctx).
-		Into(result)
+	err = c.client.Post(). // 构建 Method
+				Resource("authz").
+				VersionedParams(opts).
+				Body(request). // 构建 Body
+				Do(ctx).       // 构建 URL，发起请求
+				Into(result)   // 保存响应
 
 	return
 }

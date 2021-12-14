@@ -37,6 +37,17 @@ import (
 // | +--------------+ |      | +-----------------+ |
 // +------------------+      +---------------------+
 //
+// 分层结构：
+// API 层：Client
+//           ↓
+// 基础层：RESTClient -> Request -> gorequest
+//                    构建请求信息  完成 HTTP 请求
+//
+// 提供两种客户端：
+// RESTClient：Raw 类型的客户端，可以通过指定 HTTP 的请求方法、请求路径、请求参数等信息，直接发送 HTTP 请求，
+//      比如 client.Get().AbsPath("/version").Do().Into() 。
+// 基于 RESTClient 封装的客户端：例如 AuthzV1Client、APIV1Client 等，执行特定 REST 资源、特定 API 接口的请求，方便开发者调用。
+//
 func main() {
 	var iamconfig *string
 	if home := homedir.HomeDir(); home != "" {

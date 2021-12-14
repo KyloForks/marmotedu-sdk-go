@@ -78,7 +78,7 @@ func main() {
 
 	// Get user
 	prompt()
-	fmt.Println("Geting user...")
+	fmt.Println("Getting user...")
 	ret, err = usersClient.Get(context.TODO(), user.Name, metav1.GetOptions{})
 	if err != nil {
 		panic(err.Error())
