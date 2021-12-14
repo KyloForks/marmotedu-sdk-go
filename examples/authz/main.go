@@ -40,6 +40,7 @@ func main() {
 	}
 
 	// create the iamclient
+	// 创建服务级别客户端。
 	client, err := authzclientv1.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())

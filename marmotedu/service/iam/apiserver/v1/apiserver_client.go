@@ -12,6 +12,7 @@ import (
 )
 
 // APIV1Interface has methods to work with iam resources.
+// 服务级别接口。
 type APIV1Interface interface {
 	RESTClient() rest.Interface
 	SecretsGetter

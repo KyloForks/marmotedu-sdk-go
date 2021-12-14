@@ -40,11 +40,11 @@ func main() {
 	}
 
 	// create the iamclient
+	// 创建应用级别客户端。
 	iamclient, err := iam.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
 	}
-
 	authzClient := iamclient.AuthzV1().Authz()
 
 	request := &ladon.Request{

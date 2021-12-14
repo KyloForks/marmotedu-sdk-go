@@ -188,6 +188,7 @@ func (c TLSClientConfig) HasCertAuth() bool {
 // object. Note that a RESTClient may require fields that are optional when initializing a Client.
 // A RESTClient created by this method is generic - it expects to operate on an API that follows
 // the IAM conventions, but may not be the IAM API.
+// 创建 RESTClient 客户端。
 func RESTClientFor(config *Config) (*RESTClient, error) {
 	if config.GroupVersion == nil {
 		return nil, fmt.Errorf("GroupVersion is required when initializing a RESTClient")

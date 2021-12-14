@@ -20,6 +20,23 @@ import (
 	"github.com/marmotedu/marmotedu-sdk-go/tools/clientcmd"
 )
 
+// ywh: 调用关系：包含项目、应用、服务三层接口。
+// 1. API 接口调用格式规范，层次清晰，可以使 API 接口调用更加清晰易记。
+// 2. 可以根据需要，自行选择客户端类型，调用灵活。
+//      在服务中同时用到 iam-apiserver 和 iam-authz-server 提供的接口，
+//      可以创建应用级别客户端，通过 iamclient.APIV1() 和 iamclient.AuthzV1() 调用不同接口。
+//
+// +------Project-----+      +--marmotedu-sdk-go---+
+// | +-ApplicationA-+ |      | +------iam--------+ |
+// | | +-ServiceA-+ | |      | | +--apiserver--+ | |
+// | | +----------+ | |      | | +-------------+ | |
+// | | +-ServiceB-+ | |      | | +-authzserver-+ | |
+// | | +----------+ | |      | | +-------------+ | |
+// | +--------------+ | ===> | +-----------------+ |
+// | +-ApplicationB-+ |      | +------tms--------+ |
+// | +--------------+ |      | +-----------------+ |
+// +------------------+      +---------------------+
+//
 func main() {
 	var iamconfig *string
 	if home := homedir.HomeDir(); home != "" {
@@ -34,12 +51,14 @@ func main() {
 	flag.Parse()
 
 	// use the current context in iamconfig
+	// 创建 SDK 的配置实例 config，加载包含了服务的地址和认证信息的配置文件。
 	config, err := clientcmd.BuildConfigFromFlags("", *iamconfig)
 	if err != nil {
 		panic(err.Error())
 	}
 
 	// create the clientset
+	// 创建项目级别客户端。
 	clientset, err := marmotedu.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
@@ -53,9 +72,10 @@ func main() {
 			"remoteIP": "192.168.0.5",
 		},
 	}
-
 	// Authorize the request
 	fmt.Println("Authorize request...")
+
+	// 请求 /v1/authz 接口执行资源授权请求：
 	ret, err := clientset.Iam().AuthzV1().Authz().Authorize(context.TODO(), request, metav1.AuthorizeOptions{})
 	if err != nil {
 		panic(err.Error())

@@ -16,11 +16,13 @@ import (
 
 // SecretsGetter has a method to return a SecretInterface.
 // A group's client should implement this interface.
+// 资源级别客户端。
 type SecretsGetter interface {
 	Secrets() SecretInterface
 }
 
 // SecretInterface has methods to work with Secret resources.
+// 资源接口定义。
 type SecretInterface interface {
 	Create(ctx context.Context, secret *v1.Secret, opts metav1.CreateOptions) (*v1.Secret, error)
 	Update(ctx context.Context, secret *v1.Secret, opts metav1.UpdateOptions) (*v1.Secret, error)

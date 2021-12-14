@@ -10,6 +10,7 @@ import (
 )
 
 // Interface defines method used to return client interface used by marmotedu organization.
+// 项目级别接口。
 type Interface interface {
 	Iam() iam.IamInterface
 	// Tms() tms.TmsInterface

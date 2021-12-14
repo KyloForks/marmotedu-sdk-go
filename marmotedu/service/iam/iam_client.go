@@ -10,8 +10,8 @@ import (
 	"github.com/marmotedu/marmotedu-sdk-go/rest"
 )
 
-// IamInterface holds the methods that iam server-supported API services,
-// versions and resources.
+// IamInterface holds the methods that iam server-supported API services, versions and resources.
+// 应用级别接口。
 type IamInterface interface {
 	APIV1() apiv1.APIV1Interface
 	AuthzV1() authzv1.AuthzV1Interface
